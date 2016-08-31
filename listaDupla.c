@@ -1,9 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "listaDupla.h"
+#include "atividade.h"
 
 
+link procuraMenor(ListaDupla l){
+    link menor = l->head;
+    link no = l->head;
+    while(no != l->z){//Enquanto no for diferente do final ele continua
+        if(no->item < menor->item){//Se o item do no for menor que o guardado no menor troca
+        menor = no;
+    }
+    no = no->next;
+    }
+    return menor;//Retorna o menor encontrado
+}
 
+void trocaNo(ListaDupla l, link A, link B){
+    link aux = B;
+
+
+    A->next->prev = B;
+    A->prev->next = B;
+    A->next = B->next;
+    A->prev = B->prev;
+    B->prev->next = A;
+    B->next->prev = A;
+    B->next = aux->next;
+    B->prev = aux->prev;
+
+    free(aux);
+}
+
+void ordena(ListaDupla l){
+    link t = l->head;
+    int i;
+    while(t != l->z){
+
+        link menor = procuraMenor(l);
+        if(t->item > menor->item){
+            trocaNo(l, t, menor);
+        }
+        t = t->next;
+    }
+}
+
+/*
+void ordena(ListaDupla l){
+  link aux = l->head;
+  link aux2 = aux->next;
+  for(aux = l->head; aux != l->head; aux = aux->next){//Estrutura do Selection Sort
+    for(aux2 = aux->next; aux2 != l->z; aux2 = aux2->next){
+      if(aux->item > aux2->item){//Se o item anterior for maior que o proximo, troca todos os lugares de ponteiros alterando-os de posição
+        aux->next = aux2->next;
+        aux2->next->prev = aux->next;
+        aux2->prev = aux->prev;
+        aux->prev->next = aux2->next;
+        aux->prev = aux2->next;
+        aux2->next = aux->prev;
+      }
+    }
+  }
+}
+*/
 
 link novoNo (int item, link prev, link next) {
   link aux = malloc(sizeof(struct node));
@@ -32,7 +90,7 @@ void insereDepois (ListaDupla l, link x, link t) {
     t->next = l->z;
     t->prev = l->z;
     l->z->prev = t;
-    l->z->next = t; 
+    l->z->next = t;
   } else {
     t->next = x->next;
     t->prev = x;
@@ -74,7 +132,7 @@ link buscar(ListaDupla l, int item) {
   }
   return NULL;
 }
-/* 
+/*
 void insereAntes (ListaDupla l, link x, link t);
 */
 
@@ -84,10 +142,9 @@ void destroiLista(ListaDupla l) {
     l->head = t->next;
     l->z->next = t->next;
     l->head->prev = l->z;
-    free(t); 
+    free(t);
     t = l->head;
-  } 
+  }
   free(t);
   free(l);
 }
-
