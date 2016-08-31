@@ -1,5 +1,5 @@
-#ifndef LISTA_DUPLA_H
-#define LISTA_DUPLA_H
+#ifndef ATIVIDADE_H_INCLUDED
+#define ATIVIDADE_H_INCLUDED
 
 typedef struct node * link;
 struct node {
@@ -19,8 +19,12 @@ link buscar(ListaDupla l, int item);
 void insereDepois (ListaDupla l, link x, link t);
 void insereAntes (ListaDupla l, link x, link t);
 link removeNo (link x);
-void imprime(ListaDupla l);
-void imprimeReverso(ListaDupla l);
-void destroiLista(ListaDupla l);
+void imprime (ListaDupla l);
+void imprimeReverso (ListaDupla l);
+void destroiLista (ListaDupla l);
+link procuraMenor (ListaDupla l);
+void trocaNo(ListaDupla l, link A, link B);
+void ordena (ListaDupla l);
 
-#endif
+
+#endif // ATIVIDADE_H_INCLUDED
